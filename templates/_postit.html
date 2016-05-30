@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
-{% for postit in postits %}
-<article>
-	<h2><a href="#">{{ postit['title'] }}</a></h2>
-	<p>{{ postit['content']|safe }}</p>
-</article>
-{% endfor %}
-
-<a class="circle" href="/submit">+</a>
+<div class="dashboard">
+	{% for postit in view %}
+	<article>
+		<h2><a href="/s/{{ postit.id }}">{{ postit.title }}</a></h2>
+		<p>{{ postit.content|safe }}</p>
+	</article>
+	{% endfor %}
+</div>
+<a class="circle blue" href="/submit">+</a>
 {% endblock %}

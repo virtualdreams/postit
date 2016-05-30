@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-<article>
-	<h2>{{ postit.title }}</h2>
-	<p>{{ postit.content|safe }}</p>
-</article>
+<div class="thread" style="max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+	<article>
+		<h2>{{ view.title }}</h2>
+		<p>{{ view.content|safe }}</p>
+	</article>
+</div>
+<a class="circle red" href="/edit/{{ view.id }}">E</a>
 {% endblock %}

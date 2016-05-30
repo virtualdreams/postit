@@ -17,9 +17,14 @@ a {
 .header {
 	padding: 0 30px 0 30px;
 	color: #dddddd;
+	border-bottom: 1px solid #2e3234;
 }
 
 .content {
+	overflow: hidden;
+}
+
+.dashboard {
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -28,10 +33,18 @@ article {
 	color: #dddddd;
 	box-shadow: 0 5px 10px rgba(0,0,0,.5);
 	border: 1px solid #1d1d1d;
-	margin: 30px 0 0 30px;
+	margin: 30px;
 	padding: 10px;
 	width: 300px;
 	min-height: 200px;
+	min-width: 300px;
+	max-width: 400px;
+	flex: 1;
+	border-radius: 5px;
+}
+
+article p {
+	color: #cccccc;
 }
 
 article p a {
@@ -60,7 +73,7 @@ article h2 {
 	vertical-align: middle;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
 	color: #dddddd;
-	width: 960px;
+	min-width: 460px;
 	margin-bottom: 10px;
 }
 
@@ -82,6 +95,7 @@ article h2 {
 
 .submit textarea {
 	resize: vertical;
+	min-height: 300px;
 }
 
 .circle {
@@ -92,9 +106,20 @@ article h2 {
 	color: #fff;
 	line-height: 50px;
 	text-align: center;
-	background: #2293EC;
 	box-shadow: 0 5px 10px rgba(0,0,0,.5);
 	position: fixed;
 	bottom: 50px;
 	right: 50px;
+}
+
+.blue {
+	background: #2293EC;
+}
+
+.red {
+	background: #CF242A;
+}
+
+.yellow {
+	background: #2293EC;
 }

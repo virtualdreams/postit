@@ -2,8 +2,8 @@
 {% block body %}
 <div class="" style="max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 30px;">
 	<div class="submit">
-		<input type="text" name="title" placeholder="Titel..." id="title" />
-		<textarea name="content" placeholder="Dein Text..." id="content"></textarea>
+		<input type="text" name="title" placeholder="Titel..." id="title" value="{{ view.title }}" />
+		<textarea name="content" placeholder="Dein Text..." id="content">{{ view.content }}</textarea>
 		<input class="button" type="button" value="Veröffentlichen" id="submit" />
 	</div>
 </div>
@@ -12,11 +12,11 @@
 		$('#submit').click(function() {
 			obj = {
 				title: $('#title').val(),
-				content: $('#content').val()
+				content: $('#content').val(),
 			};
 			
 			$.ajax({
-				url: '/submit',
+				url: '/edit/{{ view.id }}',
 				type: 'post',
 				data: JSON.stringify(obj),
 				dataType: 'json',
