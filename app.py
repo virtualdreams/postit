@@ -7,6 +7,10 @@ from bson.objectid import ObjectId
 from flask import Flask, json, request, render_template, abort, Response
 
 app = Flask(__name__)
+app.config.update(
+	PROPAGATE_EXCEPTIONS = True
+)
+
 
 postitCollection = MongoClient().postit.postits
 
@@ -20,7 +24,7 @@ def page_not_found(e):
 @app.route('/')
 def home():
 	view = []
-	for postit in postitCollection.find().sort('_id', 0):
+	for postit in postitCollection.find().sort('_id', -1):
 		id = str(postit['_id'])
 		title = postit['title']
 		content = postit['content']
@@ -39,7 +43,7 @@ def home():
 @app.route('/h/<hash>')
 def get_hash(hash = None):
 	view = []
-	for postit in postitCollection.find({ 'tags' : { '$elemMatch' : { '$regex' : hash, '$options' : 'i' }}}).sort('_id', 0):
+	for postit in postitCollection.find({ 'tags' : { '$elemMatch' : { '$regex' : hash, '$options' : 'i' }}}).sort('_id', -1):
 		id = str(postit['_id'])
 		title = postit['title']
 		content = postit['content']
