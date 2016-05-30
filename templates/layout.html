@@ -16,10 +16,21 @@
 		<div class="wrapper">
 			<div class="header">
 				<h1><a href="/">postit - small text messages</a></h1>
+				<input type="text" name="search" placeholder="Suche..." id="search" class="search" />
 			</div>
 			<div class="content">
 				{% block body %}{% endblock %}
 			</div>
 		</div>
+		<script type="text/javascript">
+			$(function() {
+				$('#search').keypress(function(e) {
+					var term = $('#search').val().trim();
+					if (e.which == 13 && term != '') {
+						location.href = '/search/' + term;
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

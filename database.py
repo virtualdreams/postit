@@ -107,6 +107,37 @@ class PostitDb():
 				'content': _content
 			}
 			yield post
+			
+	def search(self, term):
+		terms = term.split()
+		x = []
+		for t in terms:
+			s = {
+				'content': { '$regex': t, '$options': 'i' }
+			}
+			x.append(s)
+			
+		print x
+			
+		for postit in self.collection.find({'$or': x}).sort('_id', -1):
+			# get the values
+			_title = postit.get('title')
+			_content = postit.get('content')
+			
+			# sanitizing
+			_title = self._sanitize(_title)
+			_content = self._sanitize(_content)
+			
+			# replace links and hashes
+			_content = self._prepare(_content)
+			
+			# create the object
+			post = {
+				'id': str(postit.get('_id')),
+				'title': _title,
+				'content': _content
+			}
+			yield post
 		
 	def _sanitize(self, value):
 		return value.replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br />')

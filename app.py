@@ -75,7 +75,16 @@ def post_edit(id = None):
 			return json.dumps({})
 		
 	return json.dumps({}), 500
-		
+	
+@app.route('/search/<term>', methods = ['GET'])
+def get_search(term = None):
+	if term is None:
+		abort(404)
+	
+	_result = db.search(term)
+	
+	return render_template('_postit.html', view = _result)
+	
 #@app.route('/api/s/list')
 #def api_list_submits():
 #	view = []

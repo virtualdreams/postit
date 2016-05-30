@@ -20,6 +20,11 @@ a {
 	border-bottom: 1px solid #2e3234;
 }
 
+.header h1 {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 .content {
 	overflow: hidden;
 }
@@ -33,6 +38,7 @@ a {
 .single {
 	display: flex;
 	justify-content: center;
+	color: #dddddd;
 }
 
 article {
@@ -90,6 +96,18 @@ article textarea {
 article label {
 	font-size: 12pt;
 	font-weight: bold;
+}
+
+.search {
+	border: 1px solid #2e3234;
+	border-radius: 3px;
+	background-color: #252829;
+	padding: 7px;
+	vertical-align: middle;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+	color: #dddddd;
+	margin-bottom: 10px;
+	box-sizing: border-box;
 }
 
 .button {
