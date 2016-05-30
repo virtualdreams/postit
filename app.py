@@ -12,9 +12,6 @@ app.config.update(
 	PROPAGATE_EXCEPTIONS = True
 )
 
-# postit database
-postitCollection = MongoClient().postit.postits
-
 db = PostitDb()
 
 # Test for empty string
@@ -85,18 +82,11 @@ def get_search(term = None):
 	
 	return render_template('_postit.html', view = _result)
 	
-#@app.route('/api/s/list')
-#def api_list_submits():
-#	view = []
-#	for postit in postitCollection.find().sort('_id', 0):
-#		post = {
-#			'id': str(postit['_id']),
-#			'title': postit['title'],
-#			'content': postit['content']
-#		}
-#		view.append(post)
-#	
-#	return Response(json.dumps(view), mimetype='application/json')
+@app.route('/api/s/list')
+def api_list_submits():
+	_result = db.getAll()
+	
+	return Response(json.dumps(list(_result)), mimetype='application/json')
 		
 if __name__ == '__main__':
 	app.run(host = '0.0.0.0', port = 8081, debug = True)
