@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="submit">
+	<input type="text" name="title" placeholder="Titel..." id="title" />
+	<textarea name="content" placeholder="Dein Text..." id="content"></textarea>
+	<input class="button" type="button" value="Veröffentlichen" id="submit" />
+</div>
+<script type="text/javascript">
+	$(function() {
+		$('#submit').click(function() {
+			obj = {
+				title: $('#title').val(),
+				content: $('#content').val()
+			};
+			
+			$.ajax({
+				url: '/submit',
+				type: 'post',
+				data: JSON.stringify(obj),
+				dataType: 'json',
+				contentType: 'application/json',
+				success: function() {
+					location.href = '/';
+				}
+			});
+		});
+	});
+</script>
+{% endblock %}

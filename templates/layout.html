@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		<link type="text/css" href="/static/css/style.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
+		
+		<title>postit</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<h1><a href="/">postit - small text messages</a></h1>
+			</div>
+			<div class="content">
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>

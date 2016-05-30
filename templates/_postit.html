@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+{% for postit in postits %}
+<article>
+	<h2><a href="#">{{ postit['title'] }}</a></h2>
+	<p>{{ postit['content']|safe }}</p>
+</article>
+{% endfor %}
+
+<a class="circle" href="/submit">+</a>
+{% endblock %}
