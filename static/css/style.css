@@ -11,22 +11,27 @@ a {
 }
 
 .wrapper {
-	width: 1000px;
-	margin-left: auto;
-	margin-right: auto;
+	height: 100%;
 }
 
 .header {
-	padding: 10px;
+	padding: 0 30px 0 30px;
 	color: #dddddd;
+}
+
+.content {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 article {
 	color: #dddddd;
 	box-shadow: 0 5px 10px rgba(0,0,0,.5);
 	border: 1px solid #1d1d1d;
-	margin-bottom: 10px;
+	margin: 30px 0 0 30px;
 	padding: 10px;
+	width: 300px;
+	min-height: 200px;
 }
 
 article p a {
@@ -35,6 +40,10 @@ article p a {
 
 article:hover {
 	border: 1px solid #2293EC;
+}
+
+article h2 {
+	margin: 0;
 }
 
 .submit {
