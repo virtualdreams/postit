@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block body %}
+<article>
+	<h2>{{ postit.title }}</h2>
+	<p>{{ postit.content|safe }}</p>
+</article>
+{% endblock %}
