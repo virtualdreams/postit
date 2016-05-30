@@ -60,7 +60,7 @@ def get_submit(id = None):
 	_id = ()
 	try:
 		_id = ObjectId(id)
-	except e:
+	except:
 		abort(404)
 	
 	postit = postitCollection.find_one({'_id': _id})
@@ -111,7 +111,7 @@ def get_edit(id	= None):
 	_id = ()
 	try:
 		_id = ObjectId(id)
-	except e:
+	except:
 		abort(404)
 	
 	postit = postitCollection.find_one({'_id': _id})
@@ -131,7 +131,7 @@ def post_edit(id = None):
 	_id = ()
 	try:
 		_id = ObjectId(id)
-	except e:
+	except:
 		abort(404)
 	
 	r = request.json
@@ -165,6 +165,13 @@ def api_list_submits():
 		view.append(post)
 	
 	return Response(json.dumps(view), mimetype='application/json')
+	
+def prepare():
+	title = r['title'].replace('<', '&lt;').replace('>', '&gt;')
+	content = r['content'].replace('<', '&lt;').replace('>', '&gt;')
+	content = content.replace('\n', '<br />')
+	content = re.sub(r'#([a-zA-Z0-9]+)', r'<a href="/h/\1">#\1</a>', content)
+	content = re.sub(r'(((https?|ftp)://|www.)[^\s<]+[^\s<\.)])', r'<a href="\1">\1</a>', content)
 		
 if __name__ == '__main__':
 	app.run(host = '0.0.0.0', port = 8080, debug = True)

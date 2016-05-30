@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="thread" style="max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 30px;">
-	<article>
+<div class="dashboard">
+	<article style="max-width: 800px;">
 		<h2>{{ view.title }}</h2>
 		<p>{{ view.content|safe }}</p>
 	</article>
 </div>
-<a class="circle red" href="/edit/{{ view.id }}">E</a>
+<a class="circle red" href="/edit/{{ view.id }}"><img src="/static/img/ic_create_white_24px.svg" alt="" title="Neu" style="padding-top: 12px;" /></a>
 {% endblock %}
