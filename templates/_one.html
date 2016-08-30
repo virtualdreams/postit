@@ -1,10 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="single">
-	<article style="width: 800px;">
-		<h2>{{ view.title }}</h2>
-		<p>{{ view.content|safe }}</p>
-	</article>
+<div class="dashboard">
+	<section class="post">
+		<article>
+			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{view.posted}}</span>
+			<p>{{ view.title|safe }}</p>
+			<p>{{ view.content|safe }}</p>
+			<span class="article-footer">0 Kommentare</span>
+		</article>
+	</section>
+	<!--
+	<section class="comment">
+		<article>
+			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; vor 4 Std.</span>
+			<p>Cool story bruh...</p>
+		</article>
+		<article>
+			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; vor 4 Std.</span>
+			<p>Cool story bruh...</p>
+		</article>
+	</section>
+	-->
 </div>
-<a class="circle red" href="/edit/{{ view.id }}"><img src="/static/img/ic_create_white_24px.svg" alt="" title="Bearbeiten" style="padding-top: 12px;" /></a>
+<a class="circle red" href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i></a>
+<!-- <a class="circle red" href="/edit/{{ view.id }}"><img src="/static/img/ic_create_white_24px.svg" alt="" title="Bearbeiten" style="padding-top: 12px;" /></a> -->
 {% endblock %}

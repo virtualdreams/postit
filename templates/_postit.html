@@ -1,12 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="dashboard">
-	{% for postit in view %}
-	<article>
-		<h2><a href="/s/{{ postit.id }}">{{ postit.title }}</a></h2>
-		<p>{{ postit.content|safe }}</p>
-	</article>
-	{% endfor %}
+	<section class="post">
+		{% for postit in view %}
+		<article>
+			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{postit.posted}}</span>
+			<a href="/s/{{ postit.id }}">
+				<p>{{ postit.title }}</p>
+			</a>
+			<span class="article-footer"><i class="material-icons">&#xE253;</i> 0 Kommentare</span>
+		</article>
+		{% endfor %}
+	</section>
 </div>
-<a class="circle blue" href="/submit"><img src="/static/img/ic_add_white_24px.svg" alt="" title="Hinzufügen" style="padding-top: 14px;" /></a>
+<a class="circle blue" href="/submit"><i class="material-icons">&#xE145;</i></a>
+<!-- <a class="circle blue" href="/submit"><img src="/static/img/ic_add_white_24px.svg" alt="" title="Hinzufügen" style="padding-top: 14px;" /></a> -->
 {% endblock %}

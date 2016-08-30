@@ -89,5 +89,5 @@ def api_list_submits():
 	return Response(json.dumps(list(_result)), mimetype='application/json')
 		
 if __name__ == '__main__':
-	app.run(host = '0.0.0.0', port = 8081, debug = True)
+	app.run(host = '0.0.0.0', port = 8082, debug = True)
 

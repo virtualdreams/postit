@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="single">
-	<article style="width: 800px;">
-		<label for="title">Title:</label>
-		<input type="text" name="title" placeholder="Dein Titel..." id="title" />
-		<label for="content">Text:</label>
-		<textarea name="content" placeholder="Dein Text..." id="content"></textarea>
-		<input class="button" type="button" value="Veröffentlichen" id="submit" />
-	</article>
+<div class="dashboard">
+	<section class="post">
+		<article style="max-width: 500px;">
+			<label for="title">Title</label>
+			<textarea style="height: 100px;" name="title" placeholder="Dein Titel..." id="title"></textarea>
+			
+			<label for="content">Text <span style="color: #4d4d4d;">(optional)</span></label>
+			<textarea style="height: 300px;" name="content" placeholder="Dein Text..." id="content"></textarea>
+			
+			<input class="button" type="button" value="Veröffentlichen" id="submit" />
+		</article>
+	</section>
 </div>
 <script type="text/javascript">
 	$(function() {

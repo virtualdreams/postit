@@ -12,11 +12,11 @@ a {
 
 .wrapper {
 	height: 100%;
-	min-width: 385px;
+	min-width: 360px;
 }
 
 .header {
-	padding: 0 30px 0 30px;
+	padding: 0 10px 0 10px;
 	color: #dddddd;
 	border-bottom: 1px solid #2e3234;
 }
@@ -32,45 +32,61 @@ a {
 }
 
 .dashboard {
-	display: flex;
-	flex-wrap: wrap;
 	color: #dddddd;
+	/*background-color: #252829;*/
 }
 
-.single {
-	display: flex;
-	justify-content: center;
+.empty {
 	color: #dddddd;
-}
-
-article {
-	color: #dddddd;
-	box-shadow: 0 2px 6px rgba(0,0,0,.5);
-	border: 1px solid #1d1d1d;
-	margin: 30px;
+	background-color: #1d1d1d;
 	padding: 10px;
-	min-height: 200px;
-	min-width: 300px;
-	width: 500px;
-	border-radius: 5px;
 }
 
-article > p {
+section.post article {
+	color: #dddddd;
+	background-color: #1d1d1d;
+	margin-bottom: 10px;
+	/*box-shadow: 0 2px 6px rgba(0,0,0,.5);*/
+	border: 1px solid #1d1d1d;
+	padding: 10px;
+}
+
+section.post article:last-child {
+	margin-bottom: 0;
+}
+
+section.post article > p {
 	color: #cccccc;
-	max-height: 400px;
-	overflow: hidden;
 }
 
-article > p a {
+section.post article > p a {
 	color: #2293EC;
 }
 
-article:hover {
-	box-shadow: 0 5px 10px rgba(0,0,0,.5);
+/* comment section */
+section.comment {
+	margin-top: 10px;
 }
 
-article h2 {
-	margin: 0;
+section.comment article {
+	color: #dddddd;
+	background-color: #1d1d1d;
+	border-bottom: 1px solid #2e3234;
+	padding: 0 15px;
+}
+
+section.comment > article > p {
+	font-size: 8pt;
+}
+
+span.article-header {
+	color: #cccccc;
+	font-size: 8pt;
+}
+
+span.article-footer {
+	color: #cccccc;
+	font-size: 8pt;
 }
 
 article input[type=text],
@@ -89,7 +105,7 @@ article textarea {
 
 article textarea {
 	resize: vertical;
-	min-height: 300px;
+	/*min-height: 300px;*/
 	width: 100%;
 	font-family: inherit;
 	font-size: inherit;
@@ -140,14 +156,14 @@ article label {
 	width: 50px;
 	height: 50px;
 	border-radius: 25px;
-	font-size: 20px;
+	font-size: 25px;
 	color: #fff;
-	line-height: 50px;
+	line-height: 40px;
 	text-align: center;
 	box-shadow: 0 5px 10px rgba(0,0,0,.5);
 	position: fixed;
-	bottom: 50px;
-	right: 50px;
+	bottom: 25px;
+	right: 25px;
 }
 
 .blue {
