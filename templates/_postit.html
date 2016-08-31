@@ -8,11 +8,10 @@
 			<a href="/s/{{ postit.id }}">
 				<p>{{ postit.title }}</p>
 			</a>
-			<span class="article-footer"><i class="material-icons">&#xE253;</i> 0 Kommentare</span>
+			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{postit.comments}} Kommentare</span>
 		</article>
 		{% endfor %}
 	</section>
 </div>
 <a class="circle blue" href="/submit"><i class="material-icons">&#xE145;</i></a>
-<!-- <a class="circle blue" href="/submit"><img src="/static/img/ic_add_white_24px.svg" alt="" title="Hinzufügen" style="padding-top: 14px;" /></a> -->
 {% endblock %}

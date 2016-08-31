@@ -81,7 +81,17 @@ def get_search(term = None):
 	_result = db.search(term)
 	
 	return render_template('_postit.html', view = _result)
+
+@app.route('/c/<id>', methods = ['POST'])
+def post_comment(id = None):
+	r = request.json
+	if r is not None:
+		_result = db.addComment(id, r.get('content'))
+		if _result is not None:
+			return json.dumps({})
 	
+	return json.dumps({}), 500
+
 @app.route('/api/s/list')
 def api_list_submits():
 	_result = db.getAll()

@@ -5,7 +5,8 @@ import datetime
 
 class PostitDb():
 	def __init__(self):
-		self.collection = MongoClient().postit.postits
+		self.posts = MongoClient().postit.postits
+		self.comments = MongoClient().postit.comments
 		
 	def add(self, title, content):
 		if title:
@@ -14,7 +15,7 @@ class PostitDb():
 				'content': content,
 				'tags': re.findall(r'/h/([a-zA-Z0-9]+)', content)
 			}
-			self.collection.insert(post)
+			self.posts.insert(post)
 			return post.get('_id')
 		else:
 			return None
@@ -32,13 +33,30 @@ class PostitDb():
 				'content': content,
 				'tags': re.findall(r'/h/([a-zA-Z0-9]+)', content)
 			}
-			self.collection.update({'_id': _id}, { '$set': post })
+			self.posts.update({'_id': _id}, { '$set': post })
 			return True
 		
 		return False
 		
+	def addComment(self, id, content):
+		_id = ()
+		try:
+			_id = ObjectId(id)
+		except:
+			return None
+			
+		if content:
+			comment = {
+				'post': _id,
+				'content': content
+			}
+			self.comments.insert(comment)
+			return comment.get('_id')
+		else:
+			return None
+		
 	def getAll(self):
-		for postit in self.collection.find().sort('_id', -1):##.skip(5).limit(5):
+		for postit in self.posts.find().sort('_id', -1):##.skip(5).limit(5):
 			# get the values
 			_title = postit.get('title')
 			_content = postit.get('content')
@@ -55,12 +73,16 @@ class PostitDb():
 			_age1, _age2 = self._age(postit.get('_id').generation_time, _now)
 			_posted = self._agetoword(_age2)
 			
+			# comments
+			_comments = self.getCommentsCount(str(postit.get('_id')))
+			
 			# create the object
 			post = {
 				'id': str(postit.get('_id')),
 				'title': _title,
 				'content': _content,
-				'posted': _posted
+				'posted': _posted,
+				'comments': _comments
 			}
 			yield post
 		
@@ -71,7 +93,7 @@ class PostitDb():
 		except:
 			return None
 			
-		postit = self.collection.find_one({'_id': _id})
+		postit = self.posts.find_one({'_id': _id})
 		if not postit:
 			return None
 		
@@ -92,17 +114,22 @@ class PostitDb():
 		_age1, _age2 = self._age(postit.get('_id').generation_time, _now)
 		_posted = self._agetoword(_age2)
 		
+		# comments
+		_comments = self.getCommentsCount(str(postit.get('_id')))
+		
 		# create the object
 		post = {
 			'id': str(postit.get('_id')),
 			'title': _title,
 			'content': _content,
-			'posted': _posted
+			'posted': _posted,
+			'comments_count': _comments,
+			'comments': self.getComments(str(postit.get('_id')))
 		}
 		return post
 		
 	def getByHash(self, hash):
-		for postit in self.collection.find({ 'tags' : { '$elemMatch' : { '$regex' : hash, '$options' : 'i' }}}).sort('_id', -1):
+		for postit in self.posts.find({ 'tags' : { '$elemMatch' : { '$regex' : hash, '$options' : 'i' }}}).sort('_id', -1):
 			# get the values
 			_title = postit.get('title')
 			_content = postit.get('content')
@@ -126,6 +153,7 @@ class PostitDb():
 				'content': _content,
 				'posted': _posted
 			}
+			
 			yield post
 			
 	def search(self, term):
@@ -133,13 +161,16 @@ class PostitDb():
 		x = []
 		for t in terms:
 			s = {
-				'content': { '$regex': t, '$options': 'i' }
+				'$or': [
+					{'title': { '$regex': t, '$options': 'i' }},
+					{'content': { '$regex': t, '$options': 'i' }}
+				]
 			}
 			x.append(s)
 			
-		print x
+		# print x
 			
-		for postit in self.collection.find({'$or': x}).sort('_id', -1):
+		for postit in self.posts.find({'$or': x}).sort('_id', -1):
 			# get the values
 			_title = postit.get('title')
 			_content = postit.get('content')
@@ -164,6 +195,45 @@ class PostitDb():
 				'posted': _posted
 			}
 			yield post
+			
+	def getComments(self, id):
+		_id = ()
+		try:
+			_id = ObjectId(id)
+		except:
+			yield []
+		
+		for comment in self.comments.find({'post': _id}).sort('_id', -1):
+			# comment age
+			_now = datetime.datetime.utcnow()
+			_, _age2 = self._age(comment.get('_id').generation_time, _now)
+			_posted = self._agetoword(_age2)
+			
+			# content
+			_content = comment.get('content')
+			
+			# sanitizing
+			_content = self._sanitize(_content)
+			
+			# replace links and hashes
+			_content = self._prepare(_content)
+			
+			# create the object
+			_comment = {
+				'content': _content,
+				'posted': _posted
+			}
+			
+			yield _comment
+			
+	def getCommentsCount(self, id):
+		_id = ()
+		try:
+			_id = ObjectId(id)
+		except:
+			return None
+		
+		return self.comments.find({'post': _id}).sort('_id', -1).count(True)
 		
 	def _sanitize(self, value):
 		return value.replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br />')
