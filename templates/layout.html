@@ -15,14 +15,26 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<div class="header">
-				<h1><a href="/">postit</a></h1>
+			<div class="header" style="position: relative;">
+				<h1><a href="/">postit</a> <i style="cursor: pointer; z-index: 999;" id="master" class="material-icons">&#xE5CF;</i></h1>
 				<input type="text" name="search" placeholder="Suche..." id="search" class="search" />
+				<div id="master-dropdown" class="menu">
+					<div class="arrow-up"></div>
+					<ul>
+						{% if current_user.is_authenticated() %}
+						<li>Hallo</li>
+						<li><a href="/logout">Logout</a></li>
+						{% else %}
+						<li><a href="/login">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
 			</div>
 			<div class="content">
 				{% block body %}{% endblock %}
 			</div>
 		</div>
+		<div class="overlay"></div>
 		<script type="text/javascript">
 			$(function() {
 				$('#search').keypress(function(e) {
@@ -31,6 +43,17 @@
 						location.href = '/search/' + term;
 					}
 				});
+				
+				$('#master').click(function() {
+					$('#master-dropdown').show();
+					$('.overlay').show();
+				})
+				
+				$('.overlay').click(function() {
+					$('#master-dropdown').hide();
+					$('#menu-dropdown').hide();
+					$('.overlay').hide();
+				})
 			});
 		</script>
 	</body>

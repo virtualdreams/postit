@@ -1,22 +1,20 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="dashboard">
-	<section class="menu" style="position: relative;">
-		<div style="padding: 5px 10px 5px 10px; cursor: pointer; border-bottom: 1px solid #2e3234;">
-			<i id="menu" class="material-icons">&#xE5D4;</i>
-		</div>
-		<ul id="menu-dropdown" style="display: none; position: absolute; top: 20; left: 0; right: 0;">
-			<li><a href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
-			<li><a href="/remove/{{ view.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
-		</ul>
-	</section>
-	<section class="post">
+	<section class="post" style="position: relative;">
 		<article>
 			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{view.posted}}</span>
 			<p>{{ view.title|safe }}</p>
 			<p>{{ view.content|safe }}</p>
-			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{ view.comments_count }} Kommentare</span>
+			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{ view.comments_count }} Kommentare &bull; <i id="menu" style="cursor: pointer;" class="material-icons">&#xE5D4;</i></span>
 		</article>
+		<div id="menu-dropdown" class="menu">
+			<div class="arrow-up"></div>
+			<ul>
+				<li><a href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
+				<li><a href="/remove/{{ view.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
+			</ul>
+		</div>
 	</section>
 	<section class="comment">
 		{% for comment in view.comments %}
@@ -38,7 +36,8 @@
 <script type="text/javascript">
 	$(function() {
 		$('#menu').click(function() {
-			$('#menu-dropdown').toggle();
+			$('#menu-dropdown').show();
+			$('.overlay').show();
 		})
 		
 		$('#comment').click(function() {

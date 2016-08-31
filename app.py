@@ -4,24 +4,77 @@ import pymongo
 import re
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from flask import Flask, json, request, render_template, abort, Response
+from flask import Flask, json, request, redirect, url_for, render_template, abort, Response
+from flask.ext.login import LoginManager
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from database import PostitDb
 
+# init flask
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 app.config.update(
 	PROPAGATE_EXCEPTIONS = True
 )
 
+# login manager
+login = LoginManager()
+login.init_app(app)
+login.login_view = 'login'
+login.session_protection = None
+
+# init database
 db = PostitDb()
 
 # Test for empty string
 IsNullOrEmpty = lambda s: True if s and s.strip() else False
 
+# User
+class User(object):
+	def __init__(self):
+		pass
+		
+	def is_authenticated(self):
+		return True
+		
+	def is_active(self):
+		return True
+		
+	def is_anonymous(self):
+		return False
+
+	def get_id(self):
+		return unicode('admin')
+
+# all routes goes here
+@login.user_loader
+def load_user(id):
+	print 'load_user: %s' % id
+
+	return User()
+
+@app.before_request
+def before_request():
+	print current_user.is_authenticated()
+	
+@app.route('/logout')
+def logout():
+	logout_user()
+	
+	return redirect('/')
+	
+@app.route('/login')
+def login():
+	user = User()
+	login_user(user)
+	
+	return redirect('/')
+	
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('_404.html'), 404
 
 @app.route('/')
+#@login_required
 def home():
 	_result = db.getAll()
 	

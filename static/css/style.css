@@ -45,21 +45,56 @@ a {
 	padding: 10px;
 }
 
-section.menu ul {
-	list-style: none;
-	padding: 0;
-	margin: 5px 5px 5px 5px;
-	background-color: #3b3b3b;
-	color: #ddd;
+.overlay {
+	z-index: 500;
+	display: none;
+	position: fixed;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
 }
 
-section.menu ul li {
-	border-bottom: 1px solid #1d1d1d;
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  position: absolute;
+  top: -10px;
+  left: 50px;
+}
+
+.menu {
+	z-index: 999;
+	display: none;
+	position: fixed;
+	top: 20; 
+	left: 0; 
+	right: 0;
+	padding: 0;
+	margin: 5px 10px;
+	background-color: #fff;
+	color: #1d1d1d;
+	box-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
+
+.menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.menu ul li {
 	padding: 10px;
 }
 
-section.menu ul li i {
+.menu ul li i {
 	color: #ccc;
+	font-size: 14pt;
 }
 
 section.post article {
@@ -85,7 +120,7 @@ section.post article > p a {
 
 /* comment section */
 section.comment {
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 
 section.comment article {
@@ -115,6 +150,10 @@ span.article-header {
 span.article-footer {
 	color: #cccccc;
 	font-size: 8pt;
+}
+
+span.article-footer i {
+	font-size: 10pt;
 }
 
 article input[type=text],
