@@ -36,6 +36,23 @@
 		</div>
 		<div class="overlay"></div>
 		<script type="text/javascript">
+			String.prototype.format = function() {
+				var s = this, i = arguments.length;
+				
+				while(i--) {
+					s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+				}
+				return s;
+			}
+			
+			String.prototype.formatEx = function(placeholders) {
+				var s = this;
+				for(var propertyName in placeholders) {
+					s = s.replace(new RegExp('\\{' + propertyName + '\\}', 'gm'), placeholders[propertyName]);
+				}    
+				return s;
+			};
+			
 			$(function() {
 				$('#search').keypress(function(e) {
 					var term = $('#search').val().trim();
@@ -47,13 +64,26 @@
 				$('#master').click(function() {
 					$('#master-dropdown').show();
 					$('.overlay').show();
+					$('body').css('overflow','hidden');
 				})
 				
 				$('.overlay').click(function() {
 					$('#master-dropdown').hide();
 					$('#menu-dropdown').hide();
 					$('.overlay').hide();
+					$('body').css('overflow','');
 				})
+				
+				// infinite scroll
+				var page = 0;
+				var win = $(window);
+				win.scroll(function() {
+					if($(document).height() - win.height() == win.scrollTop()) {
+						//alert('end of live...');
+					}
+				});
+				
+				
 			});
 		</script>
 	</body>

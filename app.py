@@ -62,12 +62,19 @@ def logout():
 	
 	return redirect('/')
 	
-@app.route('/login')
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
-	user = User()
-	login_user(user)
+	if request.method == 'GET':
+		return render_template('_login.html')
 	
-	return redirect('/')
+	r = request.json
+	if r is not None:
+		if r.get('username') == 'admin' and r.get('password') == 'secret':
+			user = User()
+			login_user(user)
+			return json.dumps({})
+	
+	abort(500)
 	
 @app.errorhandler(404)
 def page_not_found(e):
@@ -106,7 +113,7 @@ def post_submit():
 		if _result is not None:
 			return json.dumps({})
 			
-	return json.dumps({}), 500
+	return json.dumps({'error': '500'}), 500
 	
 @app.route('/edit/<id>', methods = ['GET'])
 def get_edit(id	= None):

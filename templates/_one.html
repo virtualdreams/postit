@@ -3,7 +3,7 @@
 <div class="dashboard">
 	<section class="post" style="position: relative;">
 		<article>
-			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{view.posted}}</span>
+			<span class="article-header"><a href="/u/admin">admin</a> &bull; {{view.posted}}</span>
 			<p>{{ view.title|safe }}</p>
 			<p>{{ view.content|safe }}</p>
 			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{ view.comments_count }} Kommentare &bull; <i id="menu" style="cursor: pointer;" class="material-icons">&#xE5D4;</i></span>
@@ -19,8 +19,15 @@
 	<section class="comment">
 		{% for comment in view.comments %}
 		<article>
-			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{ comment.posted }}</span>
+			<span class="article-header"><a href="/u/admin">admin</a> &bull; {{ comment.posted }} &bull; <i style="cursor: pointer;" class="material-icons">&#xE5D4;</i></span>
 			<p>{{ comment.content|safe }}</p>
+			<div class="menu">
+				<div class="arrow-up"></div>
+				<ul>
+					<li><a href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
+					<li><a href="/remove/{{ view.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
+				</ul>
+			</div>
 		</article>
 		{% endfor %}
 	</section>
