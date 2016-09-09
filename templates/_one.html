@@ -1,63 +1,67 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="dashboard">
-	<section class="post" style="position: relative;">
-		<article>
-			<span class="article-header"><a href="/u/admin">admin</a> &bull; {{view.posted}}</span>
-			<p>{{ view.title|safe }}</p>
-			<p>{{ view.content|safe }}</p>
-			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{ view.comments_count }} Kommentare &bull; <i id="menu" style="cursor: pointer;" class="material-icons">&#xE5D4;</i></span>
-		</article>
-		<div id="menu-dropdown" class="menu">
-			<div class="arrow-up"></div>
-			<ul>
-				<li><a href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
-				<li><a href="/remove/{{ view.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
-			</ul>
-		</div>
-	</section>
-	<section class="comment">
-		{% for comment in view.comments %}
-		<article>
-			<span class="article-header"><a href="/u/admin">admin</a> &bull; {{ comment.posted }} &bull; <i style="cursor: pointer;" class="material-icons">&#xE5D4;</i></span>
-			<p>{{ comment.content|safe }}</p>
-			<div class="menu">
-				<div class="arrow-up"></div>
+	<section class="post">
+		<article style="position: relative;">
+			<span class="article-header">
+				<a href="/u/admin">admin</a> &bull; {{view.posted}} &bull; <i data-id="{{ view.id }}" class="contextmenu material-icons">&#xE5CF;</i>
+			</span>
+			
+			<div id="{{ view.id }}" class="hidden">
 				<ul>
-					<li><a href="/edit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
+					<li><a href="/submit/{{ view.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
 					<li><a href="/remove/{{ view.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
 				</ul>
 			</div>
+
+			<p>{{ view.title|safe }}</p>
+			<p>{{ view.content|safe }}</p>
+			<span class="article-footer">
+				<i class="material-icons">&#xE253;</i> {{ view.comments_count }} Kommentare
+			</span>
 		</article>
-		{% endfor %}
 	</section>
 	<section class="post" style="display: none;" id="comment-input">
 		<article>
-			<label for="title">Kommentar</label>
 			<textarea style="height: 100px;" name="content" placeholder="Dein Kommentar..." id="content"></textarea>
 			
 			<input class="button" type="button" value="Kommentieren" id="submit" />
 		</article>
 	</section>
+	<section class="comment">
+		{% for comment in view.comments %}
+		<article style="position: relative;">
+			<span class="article-header">
+				<a href="/u/admin">admin</a> &bull; {{ comment.posted }} &bull; <i data-id="{{ comment.id }}" class="contextmenu material-icons">&#xE5CF;</i>
+			</span>
+			
+			<div id="{{ comment.id }}" class="hidden">
+				<ul>
+					<li><a href="/c/{{ comment.id }}"><i class="material-icons">&#xE254;</i> Bearbeiten</a></li>
+					<li><a href="/r/{{ comment.id }}"><i class="material-icons">&#xE872;</i> Löschen</a></li>
+				</ul>
+			</div>
+
+			<p>{{ comment.content|safe }}</p>
+		</article>
+		{% endfor %}
+	</section>
 </div>
 <script type="text/javascript">
 	$(function() {
-		$('#menu').click(function() {
-			$('#menu-dropdown').show();
-			$('.overlay').show();
-		})
-		
 		$('#comment').click(function() {
+			$('#content').val('');
 			$('#comment-input').toggle();
 		})
 		
 		$('#submit').click(function() {
 			obj = {
+				id: '{{ view.id }}',
 				content: $('#content').val()
 			};
 			
 			$.ajax({
-				url: '/c/{{ view.id }}',
+				url: '/c',
 				type: 'post',
 				data: JSON.stringify(obj),
 				dataType: 'json',

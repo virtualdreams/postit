@@ -4,11 +4,15 @@
 	<section class="post">
 		{% for postit in view %}
 		<article>
-			<span class="article-header"><a href="/u/admin">/u/admin</a> &bull; {{postit.posted}}</span>
+			<span class="article-header">
+				<a href="/u/admin">admin</a> &bull; {{postit.posted}}
+			</span>
 			<a href="/s/{{ postit.id }}">
 				<p>{{ postit.title }}</p>
 			</a>
-			<span class="article-footer"><i class="material-icons">&#xE253;</i> {{postit.comments}} Kommentare</span>
+			<span class="article-footer">
+				<a href="/s/{{ postit.id }}"><i class="material-icons">&#xE253;</i> {{postit.comments}} Kommentare</a>
+			</span>
 		</article>
 		{% endfor %}
 	</section>

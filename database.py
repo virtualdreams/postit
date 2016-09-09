@@ -3,14 +3,16 @@ from bson.objectid import ObjectId
 import re
 import datetime
 
-class PostitDb():
+class Postit(object):
 	def __init__(self):
-		self.posts = MongoClient().postit.postits
-		self.comments = MongoClient().postit.comments
+		client = MongoClient()
+		self.posts = client.postit.postits
+		self.comments = client.postit.comments
 		
-	def add(self, title, content):
+	def add_submit(self, title, content, user):
 		if title:
 			post = {
+				'owner': user,
 				'title': title,
 				'content': content,
 				'tags': re.findall(r'/h/([a-zA-Z0-9]+)', content)
@@ -20,7 +22,7 @@ class PostitDb():
 		else:
 			return None
 		
-	def update(self, id, title, content):
+	def update_submit(self, id, title, content):
 		_id = ()
 		try:
 			_id = ObjectId(id)
@@ -38,7 +40,7 @@ class PostitDb():
 		
 		return False
 		
-	def addComment(self, id, content):
+	def add_comment(self, id, content, user):
 		_id = ()
 		try:
 			_id = ObjectId(id)
@@ -47,6 +49,7 @@ class PostitDb():
 			
 		if content:
 			comment = {
+				'owner': user,
 				'post': _id,
 				'content': content
 			}
@@ -54,8 +57,11 @@ class PostitDb():
 			return comment.get('_id')
 		else:
 			return None
+
+	def update_comment(self, id, content):
+		pass
 		
-	def getAll(self):
+	def get_all(self):
 		for postit in self.posts.find().sort('_id', -1):##.skip(5).limit(5):
 			# get the values
 			_title = postit.get('title')
@@ -79,6 +85,7 @@ class PostitDb():
 			# create the object
 			post = {
 				'id': str(postit.get('_id')),
+				'user': 'admin',
 				'title': _title,
 				'content': _content,
 				'posted': _posted,
@@ -220,6 +227,7 @@ class PostitDb():
 			
 			# create the object
 			_comment = {
+				'id': str(comment.get('_id')),
 				'content': _content,
 				'posted': _posted
 			}

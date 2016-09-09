@@ -68,18 +68,24 @@ a {
   left: 50px;
 }
 
+.contextmenu {
+	cursor: pointer;
+}
+
 .menu {
 	z-index: 999;
 	display: none;
 	position: absolute;
-	/*top: 20;*/ 
+	top: 25%;
 	left: 0; 
 	right: 0;
 	padding: 0;
-	margin: 5px 10px;
+	margin: 10px 10px 5px 10px;
 	background-color: #fff;
 	color: #1d1d1d;
 	box-shadow: 0 2px 6px rgba(0,0,0,.5);
+	font-size: 10pt;
+	font-weight: normal;
 }
 
 .menu ul {
@@ -95,6 +101,10 @@ a {
 .menu ul li i {
 	color: #ccc;
 	font-size: 14pt;
+}
+
+.hidden {
+	display: none;
 }
 
 section.post article {
@@ -132,7 +142,7 @@ section.comment article {
 }
 
 section.comment article:first-child {
-	border-top: 1px solid #2e3234;
+	/*border-top: 1px solid #2e3234;*/
 }
 
 section.comment article > p {
